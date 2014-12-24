@@ -1,8 +1,6 @@
 # com.mp5systems.rippleeffect
 
-Alloy Titanium widget to display an in-app notification.
-
-The widget is a tiny view that comes from the top with a simple animation.
+Alloy Titanium widget to display Google Material ripple effect. This is completely based on a [library](http://www.saucer.dk/recreating-googles-ripple-effect-for-ios/) from [@Saucerdk](https://twitter.com/Saucerdk).
 
 ![image](http://www.saucer.dk/wp-content/uploads/screen_demo.gif)
 
