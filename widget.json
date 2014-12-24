@@ -1,0 +1,13 @@
+{
+	"id": "com.mp5systems.rippleeffect",
+	"name": "com.mp5systems.rippleeffect",
+	"description": "Google’s Material Design touch ripple effect wrapper by Srdjan Lukic-Bardak.",
+	"author": "Michael Pauley",
+	"version": "1.0",
+	"copyright": "Copyright (c) 2014",
+	"license": "Public Domain",
+	"min-alloy-version": "1.0",
+	"min-titanium-version": "2.1",
+	"tags": "material design, ripple",
+	"platforms": "android,ios"
+}
