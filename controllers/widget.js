@@ -1,39 +1,45 @@
-$.create = function (e){
-	// Width and Height of our clicked view.
-	// This way we can make the circle big enough to fit the view.
-	var rippleWidth = e.source.toImage().width*2;
-	var rippleHeight = e.source.toImage().width*2;
+$.create = function(e) {
+  //Use Alloy builtin Animation
+  var animation = require('alloy/animation');
 
-	// Our circle that will be scaled up using 2dMartix.
-	// We'll position the view at the center of the click position, by using (clickPositin - (clickedViewWidth / 2)).
-	$.ripple.applyProperties({
-		"top": e.y-(rippleWidth/2),
-		"left": e.x-(rippleWidth/2),
-		"width": rippleWidth,
-		"height": rippleHeight,
-		"borderRadius": rippleWidth/2,
-		"transform": Titanium.UI.create2DMatrix().scale(0)
-	});
+  // Max value from Width and Height of our clicked view.
+  // This way we can make the circle big enough to fit the view.
+  var heightWidth = (Math.max(e.source.toImage().width, e.source.toImage().height) * 2);
 
-	// Add the ripple view inside the clicked view
-	e.source.add($.ripple);
+  // Our circle that will be scaled up using 2dMartix.
+  // We'll position the view at the center of the click position, by using the center property).
+  $.ripple.applyProperties({
+    "width": heightWidth,
+    "height": heightWidth,
+    "borderRadius": heightWidth / 2,
+    "transform": Ti.UI.create2DMatrix().scale(20 / heightWidth),
+    "center": {
+      x: e.x,
+      y: e.y
+    }
+  });
 
-	// Our animation that will set the opasity from 0 to 1, and scale our view to 50% of max size.
-	$.ripple.animate({
-		opacity:1,
-		transform:Titanium.UI.create2DMatrix().scale(0.5),
-		duration:200,
-		curve:Titanium.UI.ANIMATION_CURVE_EASE_IN_OUT
-	},function() {
-		// When the first animation is finish we'll scale up to 100% while we fade the opacity to 0.
-		$.ripple.animate({
-			opacity:0,
-			transform:Titanium.UI.create2DMatrix().scale(1),
-			duration:200,
-			curve:Titanium.UI.ANIMATION_CURVE_EASE_OUT_IN
-		},function() {
-			// At the end we'll remove our ripple view from the clicked view.
-			e.source.remove($.ripple);
-		});
-	});
+  // Add the ripple view inside the clicked view
+  e.source.add($.ripple);
+
+  // Use chainAnimate to sequence the animation steps.
+  animation.chainAnimate($.ripple, [
+    // Trying to follow https://github.com/FezVrasta/bootstrap-material-design/blob/master/dist/css/ripples.css#L28
+    Ti.UI.createAnimation({
+      "opacity": 0.3,
+      "duration": 0
+    }),
+    Ti.UI.createAnimation({
+      "transform": Ti.UI.create2DMatrix().scale(2.0),
+      "duration": 350,
+      "curve": Ti.UI.ANIMATION_CURVE_EASE_IN
+    }),
+    Ti.UI.createAnimation({
+      "opacity": 0.0,
+      "duration": 100,
+      "curve": Ti.UI.ANIMATION_CURVE_LINEAR
+    })
+  ], function() {
+    e.source.remove($.ripple);
+  });
 };
