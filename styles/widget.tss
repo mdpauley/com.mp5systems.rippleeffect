@@ -1,5 +1,5 @@
 "#ripple":{
-    "backgroundColor": "rgba(255,255,255,0.40)",
+    "backgroundColor": "#FFFFFF",
     "zIndex": 999,
-    "opacity": 0
+    "opacity": 0.1
 }
